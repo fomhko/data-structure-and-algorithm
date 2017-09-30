@@ -3,7 +3,6 @@
  * This is where you will implement the required functions for the
  *  stacks and queues portion of the lab.
  */
-
 namespace QuackFun {
 
 /**
@@ -23,10 +22,18 @@ namespace QuackFun {
  * @hint Think recursively!
  */
 template <typename T>
-T sum(stack<T>& s)
-{
+T sum(stack<T>& s){
+  if(s.empty()){
+    return T();
+  }
+  T val = s.top();
+  s.pop();
+  T summed = val + sum(s);
+  s.push(val);
+  return summed;
+
     // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
+ // stub return value (0 for primitive types). Change this!
                 // Note: T() is the default value for objects, and 0 for
                 // primitive types
 }
@@ -37,7 +44,7 @@ T sum(stack<T>& s)
  * @param q A queue of items to be scrambled
  *
  * @note Any "leftover" numbers should be handled as if their block was
- *  complete.
+ *  complete.mystack.empty()
  * @note We are using the Standard Template Library (STL) queue in this
  *  problem. Its pop function works a bit differently from the stack we
  *  built. Try searching for "stl stack" to learn how to use it.
@@ -47,6 +54,27 @@ template <typename T>
 void scramble(queue<T>& q)
 {
     stack<T> s;
+    queue<T> temp;
+    for (unsigned i = 1; !q.empty(); i++){
+      for (unsigned j = 0; !(q.empty())&&j < i; j++){
+        if (i % 2 == 0){
+          s.push(q.front());
+          q.pop();
+        }
+        else{
+          temp.push(q.front());
+          q.pop();
+        }
+      }
+      while(!s.empty()){
+        temp.push(s.top());
+        s.pop();
+      }
+    }
+    while(!temp.empty()){
+      q.push(temp.front());
+      temp.pop();
+    }
     // optional: queue<T> q2;
 
     // Your code here
@@ -67,13 +95,47 @@ void scramble(queue<T>& q)
  *   sure to comment your code VERY well.
  */
 template <typename T>
-bool verifySame(stack<T>& s, queue<T>& q)
-{
-    bool retval = true; // optional
-    //T temp1; // rename me
-    //T temp2; // rename :)
-
-    return retval;
+bool verifySame(stack<T>& s, queue<T>& q){\
+  bool retval = true;
+    if (s.empty()){
+      return false;
+    }
+    if (s.top() != q.front()){
+      T temp1 = s.top();
+      s.pop()
+      retval = verifySame(s,q);
+      if retval ==
+    }
+    //
+    // bool retval = true; // optional
+    // T temp1;
+    // T temp2;
+    // if(!s.empty()){
+    //
+    //   temp1 = s.top();
+    //   s.pop();
+    //   if(temp1 == q.front()){
+    //     temp2 = q.front();
+    //     q.pop();
+    //     s.push(temp1);
+    //     retval = verify(s,q);
+    //     q.push(temp2);
+    //   }
+    //   else{
+    //     if(s.empty()){
+    //       retval = false;
+    //     }
+    //     else{
+    //       return retval&&verifySame(s,q);
+    //     }
+    //   }
+    // }
+    // else return true;
+    // //T temp1; // rename me
+    // //T temp2; // rename :)
+    //
+    // return retval;
 }
-
+  return true;
+}
 }
