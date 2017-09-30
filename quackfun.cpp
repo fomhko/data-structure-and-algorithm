@@ -94,48 +94,29 @@ void scramble(queue<T>& q)
  * - After execution of verifySame, the stack and queue must be unchanged. Be
  *   sure to comment your code VERY well.
  */
-template <typename T>
-bool verifySame(stack<T>& s, queue<T>& q){\
-  bool retval = true;
-    if (s.empty()){
-      return false;
+  template <typename T>
+  bool verifySame(stack<T>& s, queue<T>& q){
+    bool retval = true;
+    T temp;
+    if (s.size() == 1){
+      if (s.top() != q.front()){
+        retval = false;
+      }
+      temp = q.front();
+      q.pop();
+      q.push(temp);
+      return retval;
     }
+    temp = s.top();
+    s.pop();
+    retval = retval && verifySame(s,q);
+    s.push(temp);
     if (s.top() != q.front()){
-      T temp1 = s.top();
-      s.pop()
-      retval = verifySame(s,q);
-      if retval ==
+      retval = false;
     }
-    //
-    // bool retval = true; // optional
-    // T temp1;
-    // T temp2;
-    // if(!s.empty()){
-    //
-    //   temp1 = s.top();
-    //   s.pop();
-    //   if(temp1 == q.front()){
-    //     temp2 = q.front();
-    //     q.pop();
-    //     s.push(temp1);
-    //     retval = verify(s,q);
-    //     q.push(temp2);
-    //   }
-    //   else{
-    //     if(s.empty()){
-    //       retval = false;
-    //     }
-    //     else{
-    //       return retval&&verifySame(s,q);
-    //     }
-    //   }
-    // }
-    // else return true;
-    // //T temp1; // rename me
-    // //T temp2; // rename :)
-    //
-    // return retval;
-}
-  return true;
-}
+    temp = q.front();
+    q.pop();
+    q.push(temp);
+    return retval;
+  }
 }
